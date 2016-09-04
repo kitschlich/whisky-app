@@ -1,0 +1,57 @@
+App purpose: To enable users to keep a detailed journal of whiskies they have tasted and find new whiskies they might like based on tasting notes and reviews by similar users.
+
+
+User stories:
+
+As a user I can…
+
+    Log in to a private account where my information is stored.
+
+    Enter the name of a whisky I have tried.
+
+    See autocomplete suggestions from a database as I type the name of the whisky.
+
+    Enter a point rating out of 100 for the whisky.
+
+    Select from a predefined list of tasting notes to describe the whisky.
+
+    Enter the cost of the whiskey and the amount of the pour / bottle.
+
+    Enter the establishment where I purchased the whisky.
+
+    Write optional personal notes about the whisky.
+
+    Save my review information to my account.
+
+    View a list of the whiskies I have tried with the scores I have given them and the date I tried them.
+
+    Arrange the list of whiskies I have tried alphabetically, by date, or by rating.
+
+    Select any whisky that I have reviewed to see my detailed review.
+
+
+User stories beyond the scope of the MVP:
+
+As a user I can…
+
+    Get a list of whisky recommendations based on preferences of users with similar taste.
+
+    See which whiskies have been reviewed at a particular establishment.
+
+    See how much other users have paid for that each type of whisky listed at that establishment.
+
+    See the a composite of the reviews other users have posted for a particular whisky.
+
+    See the average price for a pour / bottle of a particular whisky.
+
+    See the establishments near me (or a chosen location) that users have purchased a particular whisky at.
+
+Screens the user will see:
+
+    Signup/login
+
+    List of reviewed whiskies with a button to add a new whisky
+
+    Detail of any previously reviewed whisky
+
+    Add a whisky page
