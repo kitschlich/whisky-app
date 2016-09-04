@@ -1,0 +1,30 @@
+{
+  "name": "whisky-app",
+  "version": "1.0.0",
+  "description": "An app to keep track of whisky tasting",
+  "main": "server.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {
+    "express": "^4.14.0"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kitschlich/whisky-app.git"
+  },
+  "author": "Shandra Iannucci",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kitschlich/whisky-app/issues"
+  },
+  "homepage": "https://github.com/kitschlich/whisky-app#readme"
+}
