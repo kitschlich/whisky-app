@@ -8,3 +8,10 @@ addons:
     - mongodb-3.2-precise
     packages:
     - mongodb-org-server
+deploy:
+  provider: heroku
+  api_key:
+    secure: SUn3zjq8NMJxgZHQj50Eyy+1++WI+1vkA4RvVDL8XF2UY6HVDldTplk35/Bjudxbb4UnlkZLGBzez6qedYiTsSOl4BScciXMQxDUVoUp0KP2Yywdyu6tnvoeeWkptrx0mZytP4ZMD55fyNyka30zuUsNfMGi2IL3Xq4G8pighw8jQAwgYAj/wUPIHwBZsKAVSpTDmJdxTCu2tN6f3Kbyv5iTwRv7T3tu/iUjYbph3aqRz9ZiKrTcIgtl2O1/Ozlj+h0sJlhiGdYVY5hHPy5EAOmpnNcPjxVL+sW0m6oLFe2pV46dWHJadsh5kUkUZVGMwsT4AwTZL+7CZjcyj3SFZDApKYWL5qTylPROf7/LnvPNhxpNuPwe3cc2I/3f220Iv0kRb4NOBba3gyiWqSTwqHHnMxRxWbY425Iv6wiU/f96j0h5uncR++RXjbG/wwO5qaMd0FWBvCvq0v53gXW1w2xGh4273mElib61RZcEHwFQ+4SiJ+KZE8ONMLJY0smUDjZ42HJPQV72K17lUV8x7gc3Aa+rz4pzBrjgIs36dB3N6Ypr5vnUEyPn/7wyv6xvhEIONFPJaBA1mkzSj4t/UlX38jQcswo/5m1MgIsACy9d6WV2wvk1P/jGuAF4VMP9qYIfbGb+gjUqZTfGTa47hF73VxJnPHKLHZ1ujjv74/4=
+  app: pure-island-59336
+  on:
+    repo: kitschlich/whisky-app
