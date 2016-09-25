@@ -1,1 +1,81 @@
-<h1>Add Whisky Page</h1>
+<h1>Add Whisky</h1>
+<form name="addWhiskyForm" ng-submit="submit()">
+  <div class="form-group">
+    <label for="whiskyName">Name</label>
+    <input type="text" class="form-control" placeholder="Name" ng-model="newWhisky.name">
+  </div>
+  <div class="form-group">
+    <label for="type">Type</label>
+    <select class="form-control" ng-model="newWhisky.type">
+      <option>Bourbon</option>
+      <option>Rye</option>
+      <option>Scotch</option>
+      <option>Irish</option>
+      <option>Japanese</option>
+      <option>Other</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="date">Date tasted</label>
+    <input type="date" name="date"  ng-model="newWhisky.date">
+  </div>
+  <div class="form-group">
+    <label for="age">Age (years)</label>
+    <input type="number" name="age" min="0" max="200"  ng-model="newWhisky.age">
+  </div>
+  <div class="form-group">
+    <label for="proof">Proof</label>
+    <input type="number" name="proof" min="20" max="200" ng-model="newWhisky.proof">
+  </div>
+  <div class="form-group">
+    <label for="pour-size">Pour Size (if purchased by the pour)</label>
+    <select class="form-control" name="pour-size"  ng-model="newWhisky['pour size']">
+      <option value="null">-</option>
+      <option value="2.5">2.5oz</option>
+      <option value="2">2oz</option>
+      <option value="1.5">1.5oz</option>
+      <option value="1">1oz</option>
+      <option value=".5">.5oz</option>
+      <option value=".25">.25oz</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="bottle-size">Bottle Size (if purchased by the bottle)</label>
+    <select class="form-control" name="bottle-size"  ng-model="newWhisky['bottle size']">
+      <option value="null">-</option>
+      <option value="50">50ml (Miniature)</option>
+      <option value="200">200ml (Half pint)</option>
+      <option value="375">375ml (Pint)</option>
+      <option value="750">750ml (Fifth)</option>
+      <option value="1000">1000ml (Liter)</option>
+      <option value="1500">1500ml (1.5 Liter)</option>
+      <option value="1750">1750ml (Handle)</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="price">Price $</label>
+    <input type="number" name="price" min="0" step="any" ng-model="newWhisky.price">
+  </div>
+  <div class="form-group">
+    <label for="establishment">Establishment</label>
+    <input type="text" class="form-control" placeholder="Establishment where purchased"  ng-model="newWhisky.establishment">
+  </div>
+  <div class="form-group">
+    <label for="nose">Nose</label>
+    <textarea class="form-control" name="nose" rows="1"  ng-model="newWhisky.nose" placeholder="Enter comma-separated descriptors, e.g. 'caramel, banana, bitter orange'"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="flavor">Flavor</label>
+    <textarea class="form-control" name="flavor" rows="1"  ng-model="newWhisky.flavor" placeholder="Enter comma-separated descriptors, e.g. 'caramel, banana, bitter orange'"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="finish">Finish</label>
+    <textarea class="form-control" name="finish" rows="1"  ng-model="newWhisky.finish" placeholder="Enter comma-separated descriptors, e.g. 'caramel, banana, bitter orange'"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="score">Score (out of 100)</label>
+    <input type="number" name="score" min="0" max="100"  ng-model="newWhisky.score">
+  </div>
+  <button ng-click="goToWhiskyList()" type="button" class="btn btn-default"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

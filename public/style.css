@@ -1,0 +1,20 @@
+.container {
+  max-width: 700px;
+}
+
+.main {
+  margin-top: 2em;
+}
+
+.whisky-tag {
+  margin: 0 .25em;
+}
+
+
+
+
+
+/*temporary test nav*/
+.nav-item a {
+  color: #ddd;
+}
