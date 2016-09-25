@@ -3,15 +3,20 @@
   "version": "1.0.0",
   "description": "An app to keep track of whisky tasting",
   "main": "server.js",
+  "mainView": "public/script.js",
   "directories": {
     "doc": "docs"
   },
   "dependencies": {
+    "angular": "^1.5.8",
+    "angular-route": "^1.5.8",
     "express": "^4.14.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "chai-http": "^3.0.0"
+    "chai-http": "^3.0.0",
+    "chokidar-cli": "^1.2.0",
+    "webpack": "^1.13.2"
   },
   "scripts": {
     "test": "mocha",
