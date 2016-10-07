@@ -88,6 +88,9 @@ angular.module('whiskyApp', ['ngRoute'])
   .controller('MainController', function($scope) {
 
   })
+  .controller('WelcomeController', function($scope) {
+    
+  })
   .controller('RegistrationController', function($scope, $location, $http) {
     $scope.signup = function() {
       $http({
