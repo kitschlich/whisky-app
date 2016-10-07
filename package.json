@@ -10,7 +10,19 @@
   "dependencies": {
     "angular": "^1.5.8",
     "angular-route": "^1.5.8",
-    "express": "^4.14.0"
+    "bcrypt-nodejs": "0.0.3",
+    "bcryptjs": "^2.3.0",
+    "body-parser": "^1.15.2",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "express-session": "^1.14.1",
+    "mongoose": "^4.6.1",
+    "morgan": "^1.7.0",
+    "mpromise": "^0.5.5",
+    "passport": "^0.3.2",
+    "passport-http": "^0.3.0",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",

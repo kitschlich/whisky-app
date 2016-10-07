@@ -1,7 +1,7 @@
-<h1>My Whiskies <a href="#add-whisky"><i class="fa fa-plus pull-xs-right"></i></a></h1>
+<h1>My Whiskies <i ng-click="goToAddWhisky()" class="fa fa-plus pull-xs-right"></i></h1>
 <ul class="whisky-list list-group">
-  <li ng-repeat="whisky in whiskies | orderBy:'attributes.name' " class="whisky-item list-group-item">
-    <a href="#whisky-detail/{{whisky.id}}">{{ whisky.attributes.name }}</a>
+  <li ng-repeat="whisky in whiskies | orderBy:'attributes.name' " ng-click="goToWhiskyDetail(whisky.id)" class="whisky-item list-group-item">
+    {{ whisky.attributes.name }}
     <span class="tag tag-default pull-xs-right">{{ whisky.attributes.score }}</span>
   </li>
 </ul>

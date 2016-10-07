@@ -61,10 +61,18 @@ angular.module('whiskyApp', ['ngRoute'])
     $routeProvider
 
       .when('/', {
+        templateUrl: 'pages/welcome.html',
+        controller: 'WelcomeController'
+      })
+      .when('/signup', {
+        templateUrl: 'pages/register.html',
+        controller: 'RegistrationController'
+      })
+      .when('/login', {
         templateUrl: 'pages/login.html',
         controller: 'LoginController'
       })
-      .when('/add-whisky', {
+      .when('/add-whisky/', {
         templateUrl: 'pages/add-whisky.html',
         controller: 'AddWhiskyController'
       })
@@ -72,7 +80,7 @@ angular.module('whiskyApp', ['ngRoute'])
         templateUrl: 'pages/whisky-detail.html',
         controller: 'WhiskyDetailController'
       })
-      .when('/whisky-list', {
+      .when('/whisky-list/', {
         templateUrl: 'pages/whisky-list.html',
         controller: 'WhiskyListController'
       });
@@ -80,10 +88,40 @@ angular.module('whiskyApp', ['ngRoute'])
   .controller('MainController', function($scope) {
 
   })
-  .controller('LoginController', function($scope, $controller) {
-    $controller("MainController",{$scope: $scope});
+  .controller('RegistrationController', function($scope, $location, $http) {
+    $scope.signup = function() {
+      $http({
+        method: 'POST',
+        url: '/register',
+        data: 'username=' + $scope.username + '&password=' + $scope.password,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded'}
+      })
+      .then(function(data, status, headers, config) {
+        alert('Signup successful! Please log in...');
+        $location.path('/login');
+      },
+      function(data, status, headers, config) {
+        alert('Singup failed');
+      });
+    };
   })
-  .controller('AddWhiskyController', function($scope, $location) {
+  .controller('LoginController', function($scope, $location, $http) {
+    $scope.login = function() {
+      $http({
+        method: 'POST',
+        url: '/login',
+        data: 'username=' + $scope.username + '&password=' + $scope.password,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded'}
+      })
+      .then(function(data, status, headers, config) {
+        $location.path('/whisky-list');
+      },
+      function(data, status, headers, config) {
+        alert('Login failed');
+      });
+    };
+  })
+  .controller('AddWhiskyController', function($scope, $location, $routeParams) {
     $scope.submit = function() {
       console.log($scope.newWhisky);
       $scope.newWhisky.nose = $scope.newWhisky.nose.split(', ');
@@ -91,10 +129,10 @@ angular.module('whiskyApp', ['ngRoute'])
       $scope.newWhisky.finish = $scope.newWhisky.finish.split(', ');
       MOCK_WHISKY_DATA.data.push({'id': (MOCK_WHISKY_DATA.data.length + 1), "attributes": $scope.newWhisky});
       // this will need to happen after response from the database
-      $location.path('/whisky-list');
+      $location.path('/whisky-list/');
     };
     $scope.goToWhiskyList = function() {
-      $location.path('/whisky-list');
+      $location.path('/whisky-list/');
     };
   })
   .controller('WhiskyDetailController', function($scope, $routeParams, $location) {
@@ -107,7 +145,7 @@ angular.module('whiskyApp', ['ngRoute'])
       }
     }
     $scope.goToWhiskyList = function() {
-      $location.path('/whisky-list');
+      $location.path('/whisky-list/');
     };
     $scope.editWhisky = function() {
       // API update
@@ -116,6 +154,19 @@ angular.module('whiskyApp', ['ngRoute'])
       // API delete
     };
   })
-  .controller('WhiskyListController', function($scope) {
+  .controller('WhiskyListController', function($scope, $routeParams, $location, $http) {
     $scope.whiskies = MOCK_WHISKY_DATA.data;
+    $scope.goToAddWhisky = function() {
+      $location.path('/add-whisky/');
+    };
+    $scope.goToWhiskyDetail = function(whiskyId) {
+      $location.path('/whisky-detail/' + whiskyId);
+    };
+    $http.get('/user/whiskies')
+    .then(function(data, status, headers, config) {
+      console.log('got /user/whiskies');
+    },
+    function(data, status, headers, config) {
+      console.log('get /user/whiskies failed');
+    });
   });

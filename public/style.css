@@ -6,6 +6,16 @@
   margin-top: 2em;
 }
 
+.form-signin {
+  max-width: 300px;
+  padding: 15px;
+  margin: 0 auto;
+}
+
+.form-signin button {
+  margin-top: 20px;
+}
+
 .whisky-tag {
   margin: 0 .25em;
 }
