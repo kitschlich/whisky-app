@@ -6,6 +6,7 @@ var morgan = require('morgan');
 var bCrypt = require('bcrypt-nodejs');
 
 var User = require('./models/user');
+var Whisky = require('./models/whisky');
 
 var config = require('./config');
 var mongoose = require('mongoose');
@@ -99,9 +100,68 @@ app.post('/login', passport.authenticate('local'), function(req, res) {
   res.sendStatus(200);
 });
 
-app.get('/user/whiskies', function(req, res) {
-    console.log("Req data: " + JSON.stringify(req.session.passport.user));
-    res.sendStatus(200);
+app.get('/api/user/whiskies', function(req, res) {
+    var user = req.query.username;
+
+    Whisky.find({author: user}, function(err, whiskies) {
+      if (err || !whiskies) {
+        return res.status(500).json({
+          message: 'Internal Server Error'
+        });
+      }
+      console.log("Read whiskies for", user);
+      res.json(whiskies);
+    });
+});
+
+app.post('/api/user/whiskies', function(req, res) {
+  var newWhisky = req.body;
+  console.log(newWhisky);
+
+  Whisky.findOne({ 'name' :  req.body.name }, function(err, whisky) {
+      if (err){
+          console.log('Error adding whisky');
+          return res.sendStatus(500);
+      }
+      if (whisky) {
+          console.log('Whisky already exists with that name.');
+          return res.sendStatus(500);
+      } else {
+          console.log('attempting to create new whisky');
+          var newWhisky = new Whisky();
+          newWhisky.author = req.body.author;
+          newWhisky.attributes.name = req.body.name;
+          newWhisky.attributes.style = req.body.style;
+          newWhisky.attributes.date = req.body.date;
+          newWhisky.attributes.age = req.body.age;
+          newWhisky.attributes.proof = req.body.proof;
+          newWhisky.attributes.pour_size = req.body.pour_size;
+          newWhisky.attributes.bottle_size = req.body.bottle_size;
+          newWhisky.attributes.price = req.body.price;
+          newWhisky.attributes.establishment = req.body.establishment;
+          newWhisky.attributes.nose = req.body.nose;
+          newWhisky.attributes.flavor = req.body.flavor;
+          newWhisky.attributes.finish = req.body.finish;
+          newWhisky.attributes.score = req.body.score;
+
+          newWhisky.save(function(err) {
+              if (err){
+                  console.log('Error in Saving whisky: '+err);
+                  throw err;
+              }
+              console.log('Whisky entry succesful');
+              return res.sendStatus(200);
+          });
+      }
+  });
+});
+
+app.put('/api/user/whiskies/:id', function(req, res) {
+  // edit an existing whisky
+});
+
+app.delete('/api/user/whiskies/:id', function(req, res) {
+  // delete an existing whisky
 });
 
 

@@ -1,9 +1,9 @@
-<h1>{{ whiskyDetail.name }} ({{ whiskyDetail.type }})</h1>
+<h1>{{ whiskyDetail.name }} ({{ whiskyDetail.style }})</h1>
 <h2 ng-if="whiskyDetail.date">Date tasted: {{ whiskyDetail.date }}</h2>
 <h2 ng-if="whiskyDetail.age">Age: {{ whiskyDetail.age }} years</h2>
 <h2 ng-if="whiskyDetail.proof">Proof: {{ whiskyDetail.proof }}</h2>
-<h2 ng-if="whiskyDetail['pour size']">Pour size: {{ whiskyDetail['pour size'] }}oz</h2>
-<h2 ng-if="whiskyDetail['bottle size']">Bottle size: {{ whiskyDetail['bottle size'] }}ml</h2>
+<h2 ng-if="whiskyDetail.pour_size">Pour size: {{ whiskyDetail['pour size'] }}oz</h2>
+<h2 ng-if="whiskyDetail.bottle_size">Bottle size: {{ whiskyDetail['bottle size'] }}ml</h2>
 <h2 ng-if="whiskyDetail.price">Price: ${{ whiskyDetail.price }}</h2>
 <h2 ng-if="whiskyDetail.establishment">Establishment: {{ whiskyDetail.establishment }}</h2>
 <h2 ng-if="whiskyDetail.nose">Nose: <span ng-repeat="item in whiskyDetail.nose" class="whisky-tag tag tag-default tag-success">{{ item }}</span></h2>
