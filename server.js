@@ -96,8 +96,13 @@ app.post('/register', function(req, res) {
   });
 });
 
-app.post('/login', passport.authenticate('local'), function(req, res) {
-  res.sendStatus(200);
+app.post('/login', function(req, res, next) {
+    passport.authenticate('local', function(err, user, response) {
+       if(!response.success) {
+          return res.sendStatus(401);
+       }
+       return res.sendStatus(200);
+    })(req, res, next);
 });
 
 app.get('/api/user/whiskies', function(req, res) {

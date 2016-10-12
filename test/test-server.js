@@ -88,7 +88,7 @@ describe('Whisky App', function() {
         .post('/login')
         .send({'username': 'wrong_user', 'password': '1234'})
         .end(function(err, res) {
-          res.should.not.have.status(200);
+          res.should.have.status(401);
           done();
         });
   });
@@ -97,7 +97,7 @@ describe('Whisky App', function() {
         .post('/login')
         .send({'username': 'test_user1', 'password': 'wrongpass'})
         .end(function(err, res) {
-          res.should.not.have.status(200);
+          res.should.have.status(401);
           done();
         });
   });
