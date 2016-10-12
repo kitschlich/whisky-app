@@ -129,6 +129,10 @@
 	      .when('/whisky-list/', {
 	        templateUrl: 'pages/whisky-list.html',
 	        controller: 'WhiskyListController'
+	      })
+	      .when('/edit-whisky/:id', {
+	        templateUrl: 'pages/edit-whisky.html',
+	        controller: 'EditWhiskyController'
 	      });
 	  })
 	  .factory('UserDataService', function() {
@@ -197,14 +201,14 @@
 	
 	      $http.post('/api/user/whiskies', $scope.newWhisky)
 	      .then(function(data, status, headers, config) {
-	        $location.path('/whisky-list/');
+	        $location.path('/whisky-list');
 	      });
 	    };
 	    $scope.goToWhiskyList = function() {
-	      $location.path('/whisky-list/');
+	      $location.path('/whisky-list');
 	    };
 	  })
-	  .controller('WhiskyDetailController', function($scope, $routeParams, $location, UserDataService) {
+	  .controller('WhiskyDetailController', function($scope, $routeParams, $location, UserDataService, $http) {
 	    $scope.whiskyId = $routeParams.id;
 	
 	    $scope.whiskies = UserDataService.getUserData();
@@ -218,13 +222,47 @@
 	      }
 	    }
 	    $scope.goToWhiskyList = function() {
-	      $location.path('/whisky-list/');
+	      $location.path('/whisky-list');
 	    };
 	    $scope.editWhisky = function() {
-	      // API update
+	      $location.path('/edit-whisky/' + $scope.whiskyId);
 	    };
 	    $scope.deleteWhisky = function() {
-	      // API delete
+	      alert('Are you sure you want to delete this whisky?');
+	      $http.delete('/api/user/whiskies/' + $scope.whiskyId)
+	      .then(function(data, status, headers, config) {
+	        $location.path('/whisky-list');
+	      });
+	    };
+	  })
+	  .controller('EditWhiskyController', function($scope, $routeParams, $location, $http, UserDataService) {
+	    $scope.whiskyId = $routeParams.id;
+	
+	    $scope.whiskies = UserDataService.getUserData();
+	
+	    console.log($scope.whiskies);
+	
+	    for (var i = 0; i < $scope.whiskies.data.length; i++) {
+	      if ($scope.whiskies.data[i]._id == $routeParams.id) {
+	        $scope.whiskyDetail = $scope.whiskies.data[i].attributes;
+	        console.log($scope.whiskyDetail);
+	        break;
+	      }
+	    }
+	    $scope.whiskyDetail.date = new Date($scope.whiskyDetail.date);
+	    $scope.whiskyDetail.nose = $scope.whiskyDetail.nose.join(', ');
+	    $scope.whiskyDetail.flavor = $scope.whiskyDetail.flavor.join(', ');
+	    $scope.whiskyDetail.finish = $scope.whiskyDetail.finish.join(', ');
+	
+	    $scope.saveEdits = function() {
+	      $scope.whiskyDetail.nose = $scope.whiskyDetail.nose.split(', ');
+	      $scope.whiskyDetail.flavor = $scope.whiskyDetail.flavor.split(', ');
+	      $scope.whiskyDetail.finish = $scope.whiskyDetail.finish.split(', ');
+	
+	      $http.put('/api/user/whiskies/' + $scope.whiskyId, $scope.whiskyDetail)
+	      .then(function(data, status, headers, config) {
+	        $location.path('/whisky-list');
+	      });
 	    };
 	  })
 	  .controller('WhiskyListController', function($scope, $routeParams, $location, $http, UserDataService) {

@@ -11,5 +11,5 @@
 <h2 ng-if="whiskyDetail.finish">Finish: <span ng-repeat="item in whiskyDetail.finish" class="whisky-tag tag tag-default tag-success">{{ item }}</span></h2>
 <h2 ng-if="whiskyDetail.score">Score: {{ whiskyDetail.score }}</h2>
 <button ng-click="goToWhiskyList()" type="button" class="btn btn-primary"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
-<button ng-click="" type="button" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
-<button ng-click="" type="button" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+<button ng-click="editWhisky()" type="button" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
+<button ng-click="deleteWhisky()" type="button" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>

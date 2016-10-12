@@ -72,17 +72,4 @@ describe('Whisky App', function() {
           done();
         });
   });
-  // it('should show an authenticated user the protected endpoint', function(done) {
-  //   chai.request(app)
-  //       .get('/whiskies')
-  //       .end(function(err, res) {
-  //         console.log(res.body);
-  //         done();
-  //       });
-  // });
-  // after(function(done) {
-  //   // User.remove(function() {
-  //   //   done();
-  //   // });
-  // });
 });

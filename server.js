@@ -115,8 +115,7 @@ app.get('/api/user/whiskies', function(req, res) {
 });
 
 app.post('/api/user/whiskies', function(req, res) {
-  var newWhisky = req.body;
-  console.log(newWhisky);
+  console.log(req.body);
 
   Whisky.findOne({ 'name' :  req.body.name }, function(err, whisky) {
       if (err){
@@ -149,7 +148,7 @@ app.post('/api/user/whiskies', function(req, res) {
                   console.log('Error in Saving whisky: '+err);
                   throw err;
               }
-              console.log('Whisky entry succesful');
+              console.log('Whisky entry succesful with _id: ' + newWhisky._id);
               return res.sendStatus(200);
           });
       }
@@ -157,11 +156,37 @@ app.post('/api/user/whiskies', function(req, res) {
 });
 
 app.put('/api/user/whiskies/:id', function(req, res) {
-  // edit an existing whisky
+  console.log("request body: " + req.body);
+
+  Whisky.findOneAndUpdate({ '_id':  req.params.id }, { 'attributes': req.body}, function(err, whisky) {
+    console.log('attempting to update whisky with id: ' + req.params.id);
+      if (err){
+          console.log('Error updating whisky');
+          return res.sendStatus(500);
+      }
+      if (!whisky) {
+        console.log('No whisky found with that ID');
+        return res.sendStatus(500);
+      }
+      console.log('Updated whisky');
+      return res.sendStatus(200);
+    });
 });
 
 app.delete('/api/user/whiskies/:id', function(req, res) {
-  // delete an existing whisky
+
+  Whisky.findOneAndRemove({'_id': req.params.id}, function(err, whisky) {
+    if (err) {
+      console.error('Error deleting whisky');
+      return res.sendStatus(500);
+    }
+    if (!whisky) {
+      console.log('No whisky found with that ID');
+      return res.sendStatus(500);
+    }
+    console.log('Whisky deleted');
+    return res.sendStatus(200);
+  });
 });
 
 
