@@ -61,10 +61,18 @@ angular.module('whiskyApp', ['ngRoute'])
     $routeProvider
 
       .when('/', {
+        templateUrl: 'pages/welcome.html',
+        controller: 'WelcomeController'
+      })
+      .when('/signup', {
+        templateUrl: 'pages/register.html',
+        controller: 'RegistrationController'
+      })
+      .when('/login', {
         templateUrl: 'pages/login.html',
         controller: 'LoginController'
       })
-      .when('/add-whisky', {
+      .when('/add-whisky/', {
         templateUrl: 'pages/add-whisky.html',
         controller: 'AddWhiskyController'
       })
@@ -72,37 +80,98 @@ angular.module('whiskyApp', ['ngRoute'])
         templateUrl: 'pages/whisky-detail.html',
         controller: 'WhiskyDetailController'
       })
-      .when('/whisky-list', {
+      .when('/whisky-list/', {
         templateUrl: 'pages/whisky-list.html',
         controller: 'WhiskyListController'
+      })
+      .when('/edit-whisky/:id', {
+        templateUrl: 'pages/edit-whisky.html',
+        controller: 'EditWhiskyController'
       });
+  })
+  .factory('UserDataService', function() {
+    var userData;
+
+    return {
+      setUserData: setUserData,
+      getUserData: getUserData
+    };
+
+    function setUserData(data) {
+      userData = data;
+      console.log(userData);
+    }
+
+    function getUserData() {
+      return userData;
+    }
   })
   .controller('MainController', function($scope) {
 
   })
-  .controller('LoginController', function($scope, $controller) {
-    $controller("MainController",{$scope: $scope});
+  .controller('WelcomeController', function($scope) {
+
   })
-  .controller('AddWhiskyController', function($scope, $location) {
+  .controller('RegistrationController', function($scope, $location, $http) {
+    $scope.signup = function() {
+      $http({
+        method: 'POST',
+        url: '/register',
+        data: 'username=' + $scope.username + '&password=' + $scope.password,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded'}
+      })
+      .then(function(data, status, headers, config) {
+        alert('Signup successful! Please log in...');
+        $location.path('/login');
+      },
+      function(data, status, headers, config) {
+        alert('Singup failed');
+      });
+    };
+  })
+  .controller('LoginController', function($scope, $location, $http) {
+    $scope.login = function() {
+      $http({
+        method: 'POST',
+        url: '/login',
+        data: 'username=' + $scope.username + '&password=' + $scope.password,
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded'}
+      })
+      .then(function(data, status, headers, config) {
+        localStorage.setItem("username", $scope.username);
+        $location.path('/whisky-list');
+      },
+      function(data, status, headers, config) {
+        alert('Login failed');
+      });
+    };
+  })
+  .controller('AddWhiskyController', function($scope, $location, $routeParams, $http) {
     $scope.submit = function() {
-      console.log($scope.newWhisky);
+      $scope.newWhisky.author = localStorage.getItem("username");
       $scope.newWhisky.nose = $scope.newWhisky.nose.split(', ');
       $scope.newWhisky.flavor = $scope.newWhisky.flavor.split(', ');
       $scope.newWhisky.finish = $scope.newWhisky.finish.split(', ');
-      MOCK_WHISKY_DATA.data.push({'id': (MOCK_WHISKY_DATA.data.length + 1), "attributes": $scope.newWhisky});
-      // this will need to happen after response from the database
-      $location.path('/whisky-list');
+
+      $http.post('/api/user/whiskies', $scope.newWhisky)
+      .then(function(data, status, headers, config) {
+        $location.path('/whisky-list');
+      });
     };
     $scope.goToWhiskyList = function() {
       $location.path('/whisky-list');
     };
   })
-  .controller('WhiskyDetailController', function($scope, $routeParams, $location) {
+  .controller('WhiskyDetailController', function($scope, $routeParams, $location, UserDataService, $http) {
     $scope.whiskyId = $routeParams.id;
 
-    for (var i = 0; i < MOCK_WHISKY_DATA.data.length; i++) {
-      if (MOCK_WHISKY_DATA.data[i].id == $routeParams.id) {
-        $scope.whiskyDetail = MOCK_WHISKY_DATA.data[i].attributes;
+    $scope.whiskies = UserDataService.getUserData();
+
+    console.log($scope.whiskies);
+
+    for (var i = 0; i < $scope.whiskies.data.length; i++) {
+      if ($scope.whiskies.data[i]._id == $routeParams.id) {
+        $scope.whiskyDetail = $scope.whiskies.data[i].attributes;
         break;
       }
     }
@@ -110,12 +179,65 @@ angular.module('whiskyApp', ['ngRoute'])
       $location.path('/whisky-list');
     };
     $scope.editWhisky = function() {
-      // API update
+      $location.path('/edit-whisky/' + $scope.whiskyId);
     };
     $scope.deleteWhisky = function() {
-      // API delete
+      alert('Are you sure you want to delete this whisky?');
+      $http.delete('/api/user/whiskies/' + $scope.whiskyId)
+      .then(function(data, status, headers, config) {
+        $location.path('/whisky-list');
+      });
     };
   })
-  .controller('WhiskyListController', function($scope) {
-    $scope.whiskies = MOCK_WHISKY_DATA.data;
+  .controller('EditWhiskyController', function($scope, $routeParams, $location, $http, UserDataService) {
+    $scope.whiskyId = $routeParams.id;
+
+    $scope.whiskies = UserDataService.getUserData();
+
+    console.log($scope.whiskies);
+
+    for (var i = 0; i < $scope.whiskies.data.length; i++) {
+      if ($scope.whiskies.data[i]._id == $routeParams.id) {
+        $scope.whiskyDetail = $scope.whiskies.data[i].attributes;
+        console.log($scope.whiskyDetail);
+        break;
+      }
+    }
+    $scope.whiskyDetail.date = new Date($scope.whiskyDetail.date);
+    $scope.whiskyDetail.nose = $scope.whiskyDetail.nose.join(', ');
+    $scope.whiskyDetail.flavor = $scope.whiskyDetail.flavor.join(', ');
+    $scope.whiskyDetail.finish = $scope.whiskyDetail.finish.join(', ');
+
+    $scope.saveEdits = function() {
+      $scope.whiskyDetail.nose = $scope.whiskyDetail.nose.split(', ');
+      $scope.whiskyDetail.flavor = $scope.whiskyDetail.flavor.split(', ');
+      $scope.whiskyDetail.finish = $scope.whiskyDetail.finish.split(', ');
+
+      $http.put('/api/user/whiskies/' + $scope.whiskyId, $scope.whiskyDetail)
+      .then(function(data, status, headers, config) {
+        $location.path('/whisky-list');
+      });
+    };
+  })
+  .controller('WhiskyListController', function($scope, $routeParams, $location, $http, UserDataService) {
+    $scope.user = localStorage.getItem("username");
+
+    $scope.goToAddWhisky = function() {
+      $location.path('/add-whisky/');
+    };
+    $scope.goToWhiskyDetail = function(whiskyId) {
+      $location.path('/whisky-detail/' + whiskyId);
+    };
+    $http.get('/api/user/whiskies', {
+      params: {username: $scope.user}
+    })
+    .then(function(data, status, headers, config) {
+      console.log('got /user/whiskies');
+      console.log(data);
+      $scope.whiskies = data.data;
+      UserDataService.setUserData(data);
+    },
+    function(data, status, headers, config) {
+      console.log('get /user/whiskies failed');
+    });
   });

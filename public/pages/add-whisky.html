@@ -5,8 +5,8 @@
     <input type="text" class="form-control" placeholder="Name" ng-model="newWhisky.name">
   </div>
   <div class="form-group">
-    <label for="type">Type</label>
-    <select class="form-control" ng-model="newWhisky.type">
+    <label for="style">Type</label>
+    <select class="form-control" ng-model="newWhisky.style">
       <option>Bourbon</option>
       <option>Rye</option>
       <option>Scotch</option>
@@ -29,7 +29,7 @@
   </div>
   <div class="form-group">
     <label for="pour-size">Pour Size (if purchased by the pour)</label>
-    <select class="form-control" name="pour-size"  ng-model="newWhisky['pour size']">
+    <select class="form-control" name="pour-size"  ng-model="newWhisky.pour_size">
       <option value="null">-</option>
       <option value="2.5">2.5oz</option>
       <option value="2">2oz</option>
@@ -41,7 +41,7 @@
   </div>
   <div class="form-group">
     <label for="bottle-size">Bottle Size (if purchased by the bottle)</label>
-    <select class="form-control" name="bottle-size"  ng-model="newWhisky['bottle size']">
+    <select class="form-control" name="bottle-size"  ng-model="newWhisky.bottle_size">
       <option value="null">-</option>
       <option value="50">50ml (Miniature)</option>
       <option value="200">200ml (Half pint)</option>
