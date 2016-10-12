@@ -221,7 +221,7 @@ angular.module('whiskyApp', ['ngRoute'])
   })
   .controller('WhiskyListController', function($scope, $routeParams, $location, $http, UserDataService) {
     $scope.user = localStorage.getItem("username");
-    //$scope.whiskies = MOCK_WHISKY_DATA.data;
+
     $scope.goToAddWhisky = function() {
       $location.path('/add-whisky/');
     };
