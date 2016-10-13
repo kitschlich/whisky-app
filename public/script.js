@@ -98,11 +98,9 @@ angular.module('whiskyApp', ['ngRoute'])
   })
   .controller('AddWhiskyController', function($scope, $location, $routeParams, $http) {
     $scope.submit = function() {
-      console.log("nose: ", $scope.newWhisky.nose);
       if ($scope.newWhisky.nose) $scope.newWhisky.nose = $scope.newWhisky.nose.split(', ');
       if ($scope.newWhisky.flavor) $scope.newWhisky.flavor = $scope.newWhisky.flavor.split(', ');
       if ($scope.newWhisky.finish) $scope.newWhisky.finish = $scope.newWhisky.finish.split(', ');
-      console.log("nose after split:", $scope.newWhisky.nose);
 
       $http.post('/api/user/whiskies', $scope.newWhisky)
       .then(function(data, status, headers, config) {
@@ -121,8 +119,7 @@ angular.module('whiskyApp', ['ngRoute'])
     for (var i = 0; i < $scope.whiskies.data.length; i++) {
       if ($scope.whiskies.data[i]._id == $routeParams.id) {
         $scope.whiskyDetail = $scope.whiskies.data[i].attributes;
-        console.log("nose:",$scope.whiskyDetail.nose);
-        $scope.whiskyDetail.date = new Date($scope.whiskyDetail.date);
+        if ($scope.whiskyDetail.date) $scope.whiskyDetail.date = new Date($scope.whiskyDetail.date);
         break;
       }
     }
@@ -151,15 +148,15 @@ angular.module('whiskyApp', ['ngRoute'])
         break;
       }
     }
-    $scope.whiskyDetail.date = new Date($scope.whiskyDetail.date);
-    if ($scope.newWhisky.nose) $scope.whiskyDetail.nose = $scope.whiskyDetail.nose.join(', ');
-    if ($scope.newWhisky.flavor) $scope.whiskyDetail.flavor = $scope.whiskyDetail.flavor.join(', ');
-    if ($scope.newWhisky.finish) $scope.whiskyDetail.finish = $scope.whiskyDetail.finish.join(', ');
+    if ($scope.whiskyDetail.date) $scope.whiskyDetail.date = new Date($scope.whiskyDetail.date);
+    if ($scope.whiskyDetail.nose.length > 0) $scope.whiskyDetail.nose = $scope.whiskyDetail.nose.join(', ');
+    if ($scope.whiskyDetail.flavor.length > 0) $scope.whiskyDetail.flavor = $scope.whiskyDetail.flavor.join(', ');
+    if ($scope.whiskyDetail.finish.length > 0) $scope.whiskyDetail.finish = $scope.whiskyDetail.finish.join(', ');
 
     $scope.saveEdits = function() {
-      if ($scope.newWhisky.nose) $scope.newWhisky.nose = $scope.newWhisky.nose.split(', ');
-      if ($scope.newWhisky.flavor) $scope.newWhisky.flavor = $scope.newWhisky.flavor.split(', ');
-      if ($scope.newWhisky.finish) $scope.newWhisky.finish = $scope.newWhisky.finish.split(', ');
+      if (typeof $scope.whiskyDetail.nose === 'string') $scope.whiskyDetail.nose = $scope.whiskyDetail.nose.split(', ');
+      if (typeof $scope.whiskyDetail.flavor === 'string') $scope.whiskyDetail.flavor = $scope.whiskyDetail.flavor.split(', ');
+      if (typeof $scope.whiskyDetail.finish === 'string') $scope.whiskyDetail.finish = $scope.whiskyDetail.finish.split(', ');
 
       $http.put('/api/user/whiskies/' + $scope.whiskyId, $scope.whiskyDetail)
       .then(function(data, status, headers, config) {

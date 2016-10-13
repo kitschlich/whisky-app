@@ -1,4 +1,4 @@
-<h1>{{ whiskyDetail.name }} ({{ whiskyDetail.style }})</h1>
+<h1>{{ whiskyDetail.name }} <span ng-if="whiskyDetail.style">({{ whiskyDetail.style }})</span></h1>
 <h2 ng-if="whiskyDetail.date">Date tasted: {{ whiskyDetail.date | date }}</h2>
 <h2 ng-if="whiskyDetail.age">Age: {{ whiskyDetail.age }} years</h2>
 <h2 ng-if="whiskyDetail.proof">Proof: {{ whiskyDetail.proof }}</h2>
@@ -6,9 +6,9 @@
 <h2 ng-if="whiskyDetail.bottle_size">Bottle size: {{ whiskyDetail.bottle_size }}ml</h2>
 <h2 ng-if="whiskyDetail.price">Price: ${{ whiskyDetail.price }}</h2>
 <h2 ng-if="whiskyDetail.establishment">Establishment: {{ whiskyDetail.establishment }}</h2>
-<h2 ng-if="whiskyDetail.nose">Nose: <span ng-repeat="item in whiskyDetail.nose" class="whisky-tag tag tag-default tag-success">{{ item }}</span></h2>
-<h2 ng-if="whiskyDetail.flavor">Flavor: <span ng-repeat="item in whiskyDetail.flavor" class="whisky-tag tag tag-default tag-success">{{ item }}</span></h2>
-<h2 ng-if="whiskyDetail.finish">Finish: <span ng-repeat="item in whiskyDetail.finish" class="whisky-tag tag tag-default tag-success">{{ item }}</span></h2>
+<h2 ng-if="whiskyDetail.nose.length > 0">Nose: <span ng-repeat="item in whiskyDetail.nose" class="whisky-tag tag tag-default tag-success">{{ item }}</span></h2>
+<h2 ng-if="whiskyDetail.flavor.length > 0">Flavor: <span ng-repeat="item in whiskyDetail.flavor" class="whisky-tag tag tag-default tag-success">{{ item }}</span></h2>
+<h2 ng-if="whiskyDetail.finish.length > 0">Finish: <span ng-repeat="item in whiskyDetail.finish" class="whisky-tag tag tag-default tag-success">{{ item }}</span></h2>
 <h2 ng-if="whiskyDetail.score">Score: {{ whiskyDetail.score }}</h2>
 <button ng-click="goToWhiskyList()" type="button" class="btn btn-primary"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</button>
 <button ng-click="editWhisky()" type="button" class="btn btn-warning"><i class="fa fa-pencil" aria-hidden="true"></i> Edit</button>
