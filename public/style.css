@@ -20,11 +20,15 @@
   margin: 0 .25em;
 }
 
+.whisky-list {
+  margin-bottom: 3em;
+}
 
+.logout {
+  color: #0275d8;
+}
 
-
-
-/*temporary test nav*/
-.nav-item a {
-  color: #ddd;
+.logout:hover {
+  cursor: pointer;
+  text-decoration: underline;
 }

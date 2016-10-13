@@ -70,7 +70,7 @@ describe('Whisky App', function() {
       .post('/register')
       .send({'username': 'test_user1', 'password': '1234'})
       .end(function(err, res) {
-        res.should.have.status(500);
+        res.should.have.status(409);
         done();
       });
   });
