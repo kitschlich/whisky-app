@@ -1,8 +1,8 @@
-<h1>My Whiskies <i ng-click="goToAddWhisky()" class="fa fa-plus pull-xs-right"></i></h1>
+<h1>My Whiskies <i ng-click="goToAddWhisky()" class="add-whisky fa fa-plus pull-xs-right"></i></h1>
 <ul class="whisky-list list-group">
   <li ng-repeat="whisky in whiskies | orderBy:'attributes.name' " ng-click="goToWhiskyDetail(whisky._id)" class="whisky-item list-group-item">
     {{ whisky.attributes.name }}
-    <span class="tag tag-default pull-xs-right">{{ whisky.attributes.score }}</span>
+    <span class="tag tag-primary pull-xs-right">{{ whisky.attributes.score }}</span>
   </li>
 </ul>
 <p>You are currently logged in as {{ username }}. Click <span class="logout" ng-click="logout()">here</span> to log out.</p>

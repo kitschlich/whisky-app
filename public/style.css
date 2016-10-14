@@ -16,12 +16,32 @@
   margin-top: 20px;
 }
 
+.whisky-list-container {
+  margin-bottom: 2em;
+}
+
+.add-whisky {
+  color: #0275d8;
+  text-shadow: 2px 2px #ccc;
+}
+
+.add-whisky:hover {
+  cursor: pointer;
+}
+
 .whisky-tag {
   margin: 0 .25em;
 }
 
 .whisky-list {
   margin-bottom: 3em;
+}
+
+.whisky-item:hover {
+  background-color: #0275d8;
+  border: 1px solid #0275d8;
+  color: #fff;
+  cursor: pointer;
 }
 
 .logout {
