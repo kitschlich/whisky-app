@@ -32,7 +32,14 @@
   },
   "scripts": {
     "test": "mocha",
-    "start": "node server.js"
+    "start": "nodemon server.js",
+    "build:js": "npm run clean:js && webpack",
+    "watch:js": "npm run build:js && webpack --watch",
+    "clean:js": "rm -f public/build/$npm_package_name.$npm_package_version.js public/build/$npm_package_name.$npm_package_version.js.map",
+    "build": "npm run clean && npm run mkdir && npm run build:js",
+    "watch": "npm run watch:js",
+    "clean": "npm run clean:js",
+    "mkdir": "mkdir -p build"
   },
   "repository": {
     "type": "git",

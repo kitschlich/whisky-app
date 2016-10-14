@@ -19,6 +19,8 @@ var createHash = function(password){
 chai.use(chaiHttp);
 
 describe('Whisky App', function() {
+  var cookie;
+
   before(function(done) {
     server.runServer(function() {
       User.create({
@@ -70,7 +72,7 @@ describe('Whisky App', function() {
       .post('/register')
       .send({'username': 'test_user1', 'password': '1234'})
       .end(function(err, res) {
-        res.should.have.status(500);
+        res.should.have.status(409);
         done();
       });
   });
@@ -80,6 +82,8 @@ describe('Whisky App', function() {
         .send({'username': 'test_user1', 'password': '1234'})
         .end(function(err, res) {
           res.should.have.status(200);
+          cookie = res.headers['set-cookie'];
+          console.log("cookie:", cookie);
           done();
         });
   });
@@ -104,6 +108,7 @@ describe('Whisky App', function() {
   it('should provide a list of whisky entries for a given user', function(done) {
     chai.request(app)
         .get('/api/user/whiskies?username=test_user1')
+        .set('cookie', cookie)
         .end(function(err, res) {
           res.should.have.status(200);
           res.should.be.json;
@@ -126,10 +131,12 @@ describe('Whisky App', function() {
     var whiskyId;
     chai.request(app)
         .get('/api/user/whiskies?username=test_user1')
+        .set('cookie', cookie)
         .end(function(err, res) {
           whiskyId = res.body[0]._id;
           chai.request(app)
               .put('/api/user/whiskies/' + whiskyId)
+              .set('cookie', cookie)
               .send({
                 name: "Henry McKenna 10 Single Barrel Edited",
                 style: "bourbon",
@@ -149,6 +156,7 @@ describe('Whisky App', function() {
                 res.should.have.status(200);
                 chai.request(app)
                 .get("/api/user/whiskies?username=test_user1")
+                .set('cookie', cookie)
                 .end(function(err, res) {
                   res.should.have.status(200);
                   res.should.be.json;
@@ -173,14 +181,17 @@ describe('Whisky App', function() {
     var whiskyId;
     chai.request(app)
         .get('/api/user/whiskies?username=test_user1')
+        .set('cookie', cookie)
         .end(function(err, res) {
           whiskyId = res.body[0]._id;
           chai.request(app)
               .delete('/api/user/whiskies/' + whiskyId)
+              .set('cookie', cookie)
               .end(function(err, res) {
                 res.should.have.status(200);
                 chai.request(app)
                 .get("/api/user/whiskies?username=test_user1")
+                .set('cookie', cookie)
                 .end(function(err, res) {
                   res.should.have.status(200);
                   res.should.be.json;

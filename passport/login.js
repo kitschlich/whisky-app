@@ -8,21 +8,24 @@ module.exports = function(passport){
             passReqToCallback : true
         },
         function(req, username, password, done) {
-          console.log(username, password);
             User.findOne({ 'username' :  username },
                 function(err, user) {
-                  console.log(user);
                     if (err)
-                        return done(err);
+                        return done(err, {success: false, status: 500, message: 'Internal server error.'});
                     if (!user){
                         console.log('User Not Found with username '+username);
-                        return done(null, false, {success: false});
+                        return done(null, false, {success: false, status: 401, message: 'User not found with this username.'});
                     }
                     if (!isValidPassword(user, password)){
                         console.log('Invalid Password');
-                        return done(null, false, {success: false});
+                        return done(null, false, {success: false, status: 401, message: 'Invalid password.'});
                     }
-                    return done(null, user, {success: true});
+										req.logIn(user, function(err) {
+											if (err) {
+												return done(err, {success: false, status: 500, message: 'Internal server error.'});
+											}
+											return done(null, user, {success: true});
+										});
                 }
             );
         })
