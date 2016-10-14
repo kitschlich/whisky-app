@@ -32,7 +32,7 @@
   },
   "scripts": {
     "test": "mocha",
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "build:js": "npm run clean:js && webpack",
     "watch:js": "npm run build:js && webpack --watch",
     "clean:js": "rm -f public/build/$npm_package_name.$npm_package_version.js public/build/$npm_package_name.$npm_package_version.js.map",
