@@ -1,5 +1,8 @@
 # Whiskey Journal App
 
+### Demo
+[https://pure-island-59336.herokuapp.com/](https://pure-island-59336.herokuapp.com/)
+
 ### Screenshots
 ![Screen 1](http://shandrai.com/media/whisky_screen_1.png)
 ![Screen 2](http://shandrai.com/media/whisky_screen_1.png)
