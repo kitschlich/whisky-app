@@ -5,7 +5,7 @@
 
 ### Screenshots
 ![Screen 1](http://shandrai.com/media/whisky_screen_1.png)
-![Screen 2](http://shandrai.com/media/whisky_screen_1.png)
+![Screen 2](http://shandrai.com/media/whisky_screen_2.png)
 
 ### Summary
 The Whisky Journal App is a place to keep track of your tasting notes as you sample new whiskies of all types. You can add as much or as little data from your tasting as you want, including:
